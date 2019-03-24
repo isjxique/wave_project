@@ -1,0 +1,10 @@
+version: "2"
+services:
+  web:
+    build: ./ocean_wave_frontend
+    ports:
+      - "5000:5000"
+  api:
+    build: ./ocean_wave_api
+    ports:
+      - "3000:3000"
