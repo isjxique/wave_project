@@ -1,14 +1,17 @@
 # use latest python image 
 FROM python:3.7.2-slim
 
+
 #set working directory (makes folder in container and cd's into it)
 WORKDIR /app
-
 # Copy the current directory (on host machine) contents into the container at working directory
-COPY . /app
+COPY requirements.txt /app/requirements.txt
 
 # pip install all python dependencies in the requirements file 
 RUN pip --no-cache-dir install -r /app/requirements.txt
+
+# Copy the current directory (on host machine) contents into the container at working directory
+COPY . /app
 
 #make a port available to the world outside this container 
 EXPOSE 5000

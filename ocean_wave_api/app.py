@@ -2,6 +2,7 @@
 # flask modules
 from flask import Flask, jsonify, make_response, request
 from flask_cors import CORS
+
 import json
 
 # data processing modules
@@ -81,19 +82,22 @@ def get_wavematrixwparam():
 
     # reduce precision to 16 bit float
     waveAtT = waveAtT.astype(np.float16)
+    initSpectrum = initSpectrum.astype(np.float16)
 
-    result = {'data': waveAtT.tolist()}
+    result = {'waveFieldData': waveAtT.tolist(),
+              'spatialAxis': x.tolist(),
+              'spectralFieldData': spectrum.tolist(),
+              'spectralAxis': k.tolist(),
+              }
+
     return jsonify(result)
 
-
-# add endpoint route
-#api.add_resource(returnWaveMatrixWParam, '/getwavematrixwparam/')
 
 # if modules name is main (when code run directly) then run
 # server at specified address
 if __name__ == '__main__':
     app.run(
-        debug=True,
+        debug=False,
         host='0.0.0.0',
         port=3000,
     )
