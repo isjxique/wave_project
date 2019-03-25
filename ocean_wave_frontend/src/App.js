@@ -9,10 +9,20 @@ class App extends React.Component {
     this.state = {
       value1: "2",
       value2: "0",
-      data: [
+      waveData: [
         {
           type: "contour",
-          z: []
+          z: [],
+          x: [],
+          y: []
+        }
+      ],
+      spectralData: [
+        {
+          type: "contour",
+          z: [],
+          x: [],
+          y: []
         }
       ]
     };
@@ -44,10 +54,20 @@ class App extends React.Component {
       })
       .then(json =>
         this.setState({
-          data: [
+          waveData: [
             {
               type: "contour",
-              z: json.data.data
+              z: json.data.waveFieldData,
+              x: json.data.spatialAxis,
+              y: json.data.spatialAxis
+            }
+          ],
+          spectralData: [
+            {
+              type: "contour",
+              z: json.data.spectralFieldData,
+              x: json.data.spectralAxis,
+              y: json.data.spectralAxis
             }
           ]
         })
@@ -65,10 +85,20 @@ class App extends React.Component {
       })
       .then(json =>
         this.setState({
-          data: [
+          waveData: [
             {
               type: "contour",
-              z: json.data.data
+              z: json.data.waveFieldData,
+              x: json.data.spatialAxis,
+              y: json.data.spatialAxis
+            }
+          ],
+          spectralData: [
+            {
+              type: "contour",
+              z: json.data.spectralFieldData,
+              x: json.data.spectralAxis,
+              y: json.data.spectralAxis
             }
           ]
         })
@@ -78,44 +108,61 @@ class App extends React.Component {
 
   render() {
     return (
-      <div class="ui center aligned container">
-        <div>
+      <div class="ui three column stackable grid">
+        <div class="column" />
+        <div class="column">
           <div>
-            <input
-              type="range"
-              name="value1"
-              min="0"
-              max="6"
-              value={this.state.value1}
-              onChange={this.handleChange}
-              step="0.5"
+            <Plot
+              data={this.state.spectralData}
+              layout={{
+                title: "Plot of Wave Spectrum",
+                autosize: true
+              }}
+              style={{ width: "100%", height: "100%" }}
+              useResizeHandler={true}
             />
-            <label for="volume">Wind Speed = {this.state.value1}</label>
+          </div>
+          <div class="ui centered">
+            <div>
+              <input
+                type="range"
+                name="value1"
+                min="0"
+                max="6"
+                value={this.state.value1}
+                onChange={this.handleChange}
+                step="0.25"
+              />
+              <label for="volume">Wind Speed = {this.state.value1}</label>
+            </div>
+
+            <div>
+              <input
+                type="range"
+                name="value2"
+                min="0"
+                max="360"
+                value={this.state.value2}
+                onChange={this.handleChange}
+                step="1"
+              />
+              <label for="volume"> Wind Direction = {this.state.value2}</label>
+            </div>
           </div>
 
           <div>
-            <input
-              type="range"
-              name="value2"
-              min="0"
-              max="360"
-              value={this.state.value2}
-              onChange={this.handleChange}
-              step="1"
+            <Plot
+              data={this.state.waveData}
+              layout={{
+                title: "Plot of Wave Field",
+                autosize: true
+              }}
+              style={{ width: "100%", height: "100%" }}
+              useResizeHandler={true}
             />
-            <label for="volume"> Wind Direction = {this.state.value2}</label>
           </div>
-        </div>
-        <div>
-          <Plot
-            data={this.state.data}
-            layout={{
-              width: 400,
-              height: 400,
-              title: "A Fancy Countour Plot of Waves",
-              autosize: true
-            }}
-          />
+
+          <div class="column" />
         </div>
       </div>
     );
