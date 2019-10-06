@@ -10,24 +10,40 @@ This project creates an interactive visualization of an ocean wave field given v
 
 ## Installation
 
-1. Pull project from github git.
+1. Pull project from github.
 
 ```
 git clone https://github.com/isjxique/wave_project
+
 ```
 
-2. Go to back to main project folder (contains the docker-compose.yml file) and run the following to build and run the docker images
+2. Go to the main project folder (contains the docker-compose.yml file) and enter the following into the terminal to build the docker images:
+
+```
+docker-compose build
+
+```
+
+## Usage
+
+1.  Go to the main project folder (contains the docker-compose.yml file) and enter the following into the terminal to run the docker images:
 
 ```
 docker-compose up
 
 ```
 
-## Usage
-
-3. The web and api services should be publishing information in the terminal.
+2.  The web and api services should be publishing information in the terminal.
 
 ```
 Copy the url such as http://localhost:5000 printed by the web service to view interactive plots.
+
+```
+
+3.  Enter the following into the terminal to shutdown the services:
+
+```
+docker-compose down
+
 
 ```
